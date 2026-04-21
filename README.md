@@ -2,6 +2,27 @@
 
 DONATO is a production-style MVP donation platform for streamers with clean architecture and real-time donation updates.
 
+## One Click Run (No Setup)
+
+Use this if you want a github.io style experience with no Node, no MongoDB, and no install steps.
+
+1. Open [index.html](index.html) directly in your browser.
+2. Or publish this repository on GitHub Pages and open the root URL.
+
+What this mode includes:
+
+- Login and register
+- Streamer list
+- Donation flow with payment method selection
+- User dashboard and streamer dashboard
+- Instant live-feed style updates
+- Browser localStorage persistence
+
+Notes:
+
+- This mode is static and does not need backend APIs.
+- Use the Reset Demo Data button to reseed default demo users.
+
 ## Stack
 
 - Frontend: React (Vite), Tailwind CSS, React Router
@@ -86,6 +107,8 @@ Copy client/.env.example to client/.env and update values:
 - VITE_GOOGLE_AUTH_URL
 
 ## Local Run
+
+Full-stack mode (client + server) is still available.
 
 From repository root:
 
