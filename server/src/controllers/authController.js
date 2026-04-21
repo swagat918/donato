@@ -2,13 +2,17 @@ const env = require('../config/env');
 const authService = require('../services/authService');
 const tokenService = require('../services/tokenService');
 
-function setAuthCookie(res, token) {
-  res.cookie(env.cookieName, token, {
+function getCookieOptions() {
+  return {
     httpOnly: true,
-    secure: env.nodeEnv === 'production',
-    sameSite: 'lax',
+    secure: env.cookieSecure,
+    sameSite: env.cookieSameSite,
     maxAge: 7 * 24 * 60 * 60 * 1000
-  });
+  };
+}
+
+function setAuthCookie(res, token) {
+  res.cookie(env.cookieName, token, getCookieOptions());
 }
 
 async function register(req, res) {
@@ -52,7 +56,9 @@ async function me(req, res) {
 }
 
 async function logout(req, res) {
-  res.clearCookie(env.cookieName);
+  const options = getCookieOptions();
+  delete options.maxAge;
+  res.clearCookie(env.cookieName, options);
   res.json({ success: true });
 }
 

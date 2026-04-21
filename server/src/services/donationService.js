@@ -41,12 +41,20 @@ async function createDonation({ userId, streamerId, amount, message, paymentMeth
     status: 'pending'
   });
 
-  const paymentResult = await paymentService.processPayment(paymentMethod, {
-    donationId: pendingDonation._id.toString(),
-    amount,
-    userId,
-    streamerId
-  });
+  let paymentResult;
+  try {
+    paymentResult = await paymentService.processPayment(paymentMethod, {
+      donationId: pendingDonation._id.toString(),
+      amount,
+      userId,
+      streamerId
+    });
+  } catch (error) {
+    pendingDonation.status = 'failed';
+    pendingDonation.failureReason = error.message || 'Payment provider failed';
+    await pendingDonation.save();
+    throw new ApiError(502, 'Payment provider error');
+  }
 
   if (!paymentResult.success) {
     pendingDonation.status = 'failed';
@@ -101,6 +109,10 @@ async function getUserDonations(userId) {
 }
 
 async function getStreamerDonations(streamerId) {
+  if (!mongoose.Types.ObjectId.isValid(streamerId)) {
+    throw new ApiError(400, 'Invalid streamer id');
+  }
+
   const donations = await Donation.find({ streamerId, status: 'success' })
     .populate('userId', 'name')
     .sort({ createdAt: -1 })

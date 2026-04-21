@@ -31,7 +31,17 @@ async function requireAuth(req, res, next) {
 
     next();
   } catch (error) {
-    next(new ApiError(401, 'Invalid or expired token'));
+    if (error instanceof ApiError) {
+      next(error);
+      return;
+    }
+
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      next(new ApiError(401, 'Invalid or expired token'));
+      return;
+    }
+
+    next(error);
   }
 }
 

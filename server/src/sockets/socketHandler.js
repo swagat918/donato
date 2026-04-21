@@ -5,7 +5,7 @@ const { setIo } = require('./io');
 function initializeSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: env.clientUrl,
+      origin: env.clientUrls,
       credentials: true
     }
   });

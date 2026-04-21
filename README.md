@@ -2,7 +2,41 @@
 
 DONATO is a production-style MVP donation platform for streamers with clean architecture and real-time donation updates.
 
-## One Click Run (No Setup)
+## Full-Stack Run (Real Website)
+
+This is the primary mode. It runs React + Express + MongoDB with real API calls, JWT auth, and Socket.io updates.
+
+From repository root:
+
+1. Install dependencies
+
+npm install
+
+2. Create env files
+
+- Copy server/.env.example to server/.env
+- Copy client/.env.example to client/.env
+
+3. Start MongoDB locally (or update MONGODB_URI in server/.env)
+
+4. Seed sample data
+
+npm run seed
+
+5. Start frontend and backend together
+
+npm run dev
+
+6. Open the website
+
+- Frontend: http://localhost:5173
+- Backend health: http://localhost:5000/health
+
+For production-like local run (backend serving built frontend):
+
+npm run start:prod
+
+## Optional Static Preview
 
 Use this if you want a github.io style experience with no Node, no MongoDB, and no install steps.
 
@@ -90,6 +124,8 @@ Copy server/.env.example to server/.env and update values:
 - MONGODB_URI
 - CLIENT_URL
 - COOKIE_NAME
+- COOKIE_SAME_SITE
+- COOKIE_SECURE
 - JWT_SECRET
 - JWT_EXPIRES_IN
 - PLATFORM_COMMISSION_RATE
@@ -106,26 +142,10 @@ Copy client/.env.example to client/.env and update values:
 - VITE_SOCKET_URL
 - VITE_GOOGLE_AUTH_URL
 
-## Local Run
+## Local Run Notes
 
-Full-stack mode (client + server) is still available.
-
-From repository root:
-
-1. Install dependencies
-
-npm install
-
-2. Seed sample data
-
-npm run seed
-
-3. Start both frontend and backend
-
-npm run dev
-
-Frontend: http://localhost:5173
-Backend: http://localhost:5000
+- `npm run dev` runs client and server separately for development.
+- `npm run start:prod` builds the client and serves it from the backend in production mode.
 
 ## Seed Data
 
