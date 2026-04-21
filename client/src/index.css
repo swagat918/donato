@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui;
+}
+
+.card {
+  @apply rounded-2xl border border-ink/10 bg-white/85 shadow-[0_12px_30px_rgba(15,28,42,0.08)] backdrop-blur;
+}
+
+.pill {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+.input {
+  @apply w-full rounded-xl border border-ink/20 bg-white px-3 py-2 text-sm outline-none transition focus:border-glow focus:ring-2 focus:ring-glow/30;
+}
+
+.button-primary {
+  @apply inline-flex items-center justify-center rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-ink/90;
+}
+
+.button-secondary {
+  @apply inline-flex items-center justify-center rounded-xl border border-ink/20 bg-white px-4 py-2 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-ink/40;
+}
