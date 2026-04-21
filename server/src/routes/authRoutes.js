@@ -21,6 +21,7 @@ function requireGoogleOAuth(req, res, next) {
 
 router.post('/register', validateRequest(registerSchema), asyncHandler(authController.register));
 router.post('/login', validateRequest(loginSchema), asyncHandler(authController.login));
+router.get('/config', asyncHandler(authController.config));
 
 router.get(
   '/google',

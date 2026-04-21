@@ -62,10 +62,20 @@ async function logout(req, res) {
   res.json({ success: true });
 }
 
+async function config(req, res) {
+  res.json({
+    success: true,
+    googleOAuthEnabled: env.googleOAuthEnabled,
+    clientUrl: env.clientUrl,
+    authProvider: env.googleOAuthEnabled ? 'google' : 'password'
+  });
+}
+
 module.exports = {
   register,
   login,
   googleCallback,
   me,
-  logout
+  logout,
+  config
 };

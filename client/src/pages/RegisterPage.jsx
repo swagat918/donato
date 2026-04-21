@@ -38,29 +38,54 @@ function RegisterPage() {
   };
 
   return (
-    <section className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.98fr_1.02fr] lg:items-start">
-      <aside className="card p-6">
-        <span className="pill bg-mint/20 text-mint">Create your account</span>
-        <h1 className="mt-4 font-display text-4xl font-bold leading-tight">Join DONATO and start supporting streamers</h1>
-        <p className="mt-3 text-sm leading-6 text-ink/70">
-          Register with phone number or email. Choose a user account or streamer account during signup.
-        </p>
-
-        <div className="mt-6 space-y-4 rounded-3xl bg-paper p-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Phone number support</p>
-            <p className="mt-1 font-semibold">Make this feel like a real app.</p>
-          </div>
-          <p className="text-sm text-ink/70">
-            The form supports phone number, email, password, Google login later, and streamer profile fields right here.
+    <section className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.94fr_1.06fr] lg:items-start">
+      <aside className="card overflow-hidden p-0">
+        <div className="bg-[linear-gradient(135deg,#101827_0%,#1d3653_52%,#f39b17_180%)] px-6 py-7 text-white md:px-8">
+          <span className="pill bg-white/12 text-white">Create your account</span>
+          <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">Join DONATO and start supporting streamers</h1>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-white/78 md:text-base">
+            Register with phone number or email. Choose a user account or streamer account during signup.
           </p>
+        </div>
+
+        <div className="space-y-4 p-6 md:p-8">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl bg-paper p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Phone support</p>
+              <p className="mt-1 font-semibold">Phone and email auth</p>
+            </div>
+            <div className="rounded-3xl bg-paper p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Streamer mode</p>
+              <p className="mt-1 font-semibold">Display name and bio</p>
+            </div>
+            <div className="rounded-3xl bg-paper p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Session</p>
+              <p className="mt-1 font-semibold">Auto login after signup</p>
+            </div>
+            <div className="rounded-3xl bg-paper p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/50">Product feel</p>
+              <p className="mt-1 font-semibold">Built like a real app</p>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-ink/10 bg-white p-4 text-sm leading-6 text-ink/70">
+            Register once and use the same session to browse creators, donate, and open dashboards.
+          </div>
         </div>
       </aside>
 
-      <div className="card p-6">
-        <h2 className="font-display text-2xl font-bold">Create your account</h2>
+      <div className="card p-6 md:p-8">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <span className="pill bg-glow/20 text-ink">Create account</span>
+            <h2 className="mt-4 font-display text-3xl font-bold">Make your account</h2>
+          </div>
+          <Link className="text-sm font-semibold text-ink underline decoration-ink/30 underline-offset-4" to="/login">
+            Already have one?
+          </Link>
+        </div>
 
-        <form onSubmit={onSubmit} className="mt-5 grid gap-4 md:grid-cols-2">
+        <form onSubmit={onSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
           <label className="block text-sm font-medium md:col-span-2">
             Full name
             <input className="input mt-1" name="name" value={form.name} onChange={onChange} required />
@@ -136,19 +161,12 @@ function RegisterPage() {
             </>
           )}
 
-          {error && <p className="rounded-xl bg-ember/10 px-3 py-2 text-sm text-ember md:col-span-2">{error}</p>}
+          {error && <p className="rounded-2xl border border-ember/20 bg-ember/10 px-4 py-3 text-sm leading-6 text-ember md:col-span-2">{error}</p>}
 
           <button className="button-primary md:col-span-2" disabled={submitting} type="submit">
             {submitting ? 'Creating account...' : 'Create account'}
           </button>
         </form>
-
-        <p className="mt-4 text-sm text-ink/70">
-          Already have an account?{' '}
-          <Link className="font-semibold text-ink underline" to="/login">
-            Login
-          </Link>
-        </p>
       </div>
     </section>
   );

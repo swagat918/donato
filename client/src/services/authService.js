@@ -20,6 +20,11 @@ export async function logout() {
   return data;
 }
 
+export async function config() {
+  const { data } = await apiClient.get('/auth/config');
+  return data;
+}
+
 export function startGoogleAuth() {
   const googleUrl =
     import.meta.env.VITE_GOOGLE_AUTH_URL ||

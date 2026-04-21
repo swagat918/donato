@@ -779,7 +779,9 @@
       streamers: [],
       donations: [],
       donationTarget: null,
-      authTab: 'login'
+      authTab: 'login',
+      googleEnabled: true,
+      googleLoading: true
     };
 
     const apiBase = (() => {
@@ -870,11 +872,35 @@
       return data;
     }
 
+    async function refreshAuthConfig() {
+      try {
+        const response = await api('/auth/config');
+        state.googleEnabled = Boolean(response.googleOAuthEnabled);
+      } catch (error) {
+        state.googleEnabled = false;
+      } finally {
+        state.googleLoading = false;
+        updateAuthUi();
+      }
+    }
+
     function authUrl() {
       if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '') {
         return 'http://localhost:5000/auth/google';
       }
       return '/api/auth/google';
+    }
+
+    function updateAuthUi() {
+      if (!els.googleBtn) return;
+      if (state.googleLoading) {
+        els.googleBtn.textContent = 'Checking Google sign-in...';
+        els.googleBtn.disabled = true;
+        return;
+      }
+
+      els.googleBtn.disabled = !state.googleEnabled;
+      els.googleBtn.textContent = state.googleEnabled ? 'Continue with Google' : 'Google sign-in unavailable';
     }
 
     function setAuthTab(tab) {
@@ -883,6 +909,16 @@
       els.registerPanel.hidden = tab !== 'register';
       els.loginTabBtn.className = tab === 'login' ? 'button button-primary' : 'button button-secondary';
       els.registerTabBtn.className = tab === 'register' ? 'button button-primary' : 'button button-secondary';
+    }
+
+    function handleGoogleAuth() {
+      if (!state.googleEnabled) {
+        setMessage(els.loginMessage, 'Google login is not configured on this server. Use phone/email login or set the Google env vars in the backend.', 'error');
+        setAuthTab('login');
+        return;
+      }
+
+      window.location.href = authUrl();
     }
 
     function updateSessionUi() {
@@ -1180,7 +1216,7 @@
     function bindEvents() {
       els.loginTabBtn.addEventListener('click', () => setAuthTab('login'));
       els.registerTabBtn.addEventListener('click', () => setAuthTab('register'));
-      els.googleBtn.addEventListener('click', startGoogleAuth);
+      els.googleBtn.addEventListener('click', handleGoogleAuth);
       els.loginForm.addEventListener('submit', handleLogin);
       els.registerForm.addEventListener('submit', handleRegister);
       els.logoutBtn.addEventListener('click', handleLogout);
@@ -1205,7 +1241,9 @@
     setAuthTab('login');
     bindEvents();
     updateSessionUi();
+    updateAuthUi();
     refreshStreamers();
+    refreshAuthConfig();
     refreshSession();
   </script>
 </body>
