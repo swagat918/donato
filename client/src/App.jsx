@@ -15,7 +15,7 @@ function App() {
     <div className="min-h-screen bg-paper text-ink">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(247,165,27,0.20),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(43,185,167,0.18),transparent_28%),linear-gradient(180deg,#f6f3ed_0%,#f2efe8_100%)]" />
       <NavBar />
-      <main className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8">
+      <main className="page-shell">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
