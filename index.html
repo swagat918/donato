@@ -1,24 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DONATO</title>
-  <script>
-    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/')) {
-      window.location.replace('client/index.html');
-    }
-  </script>
   <style>
     :root {
-      --bg: #f5f2eb;
+      --bg: #f5f1ea;
+      --bg-alt: #efe8de;
       --ink: #0f1c2a;
-      --muted: #5f6d7d;
-      --card: #ffffff;
+      --muted: #607084;
+      --card: rgba(255, 255, 255, 0.86);
       --line: rgba(15, 28, 42, 0.1);
       --accent: #f39b17;
-      --accent-soft: rgba(243, 155, 23, 0.18);
+      --accent-soft: rgba(243, 155, 23, 0.16);
       --mint: #2bb9a7;
+      --danger: #cf4a3c;
       --shadow: 0 18px 50px rgba(15, 28, 42, 0.12);
     }
 
@@ -28,52 +25,58 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 15% 10%, rgba(243, 155, 23, 0.18), transparent 32%),
-        radial-gradient(circle at 85% 20%, rgba(43, 185, 167, 0.16), transparent 28%),
-        linear-gradient(180deg, #f7f3ec 0%, #f1eee7 100%);
+        radial-gradient(circle at 10% 10%, rgba(243, 155, 23, 0.18), transparent 30%),
+        radial-gradient(circle at 90% 18%, rgba(43, 185, 167, 0.16), transparent 24%),
+        linear-gradient(180deg, #f7f3ee 0%, #f1ece3 100%);
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
     a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
     .wrap {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-      background: rgba(245, 242, 235, 0.84);
+      z-index: 20;
       border-bottom: 1px solid var(--line);
+      background: rgba(245, 241, 234, 0.88);
+      backdrop-filter: blur(12px);
     }
+
     .topbar-inner {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
+      gap: 14px;
       padding: 14px 0;
       flex-wrap: wrap;
     }
+
     .brand {
       display: inline-flex;
       align-items: center;
       gap: 12px;
       font-weight: 900;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
+
     .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #101827, #1f3a5f 55%, #f39b17 180%);
+      border-radius: 14px;
       color: #fff;
+      background: linear-gradient(135deg, #0f1c2a, #1d3653 55%, #f39b17 180%);
       box-shadow: var(--shadow);
     }
+
     .nav {
       display: flex;
       flex-wrap: wrap;
@@ -81,6 +84,7 @@
       color: var(--muted);
       font-size: 0.95rem;
     }
+
     .nav a:hover { color: var(--ink); }
 
     .button {
@@ -88,16 +92,19 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 18px;
       border-radius: 999px;
-      font-weight: 700;
+      padding: 12px 18px;
       border: 1px solid transparent;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-weight: 700;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+      background: transparent;
     }
+
     .button:hover { transform: translateY(-1px); }
     .button-primary {
       color: #fff;
-      background: linear-gradient(135deg, #101827 0%, #1e3a5f 55%, #f39b17 180%);
+      background: linear-gradient(135deg, #101827 0%, #1d3653 55%, #f39b17 180%);
       box-shadow: var(--shadow);
     }
     .button-secondary {
@@ -105,39 +112,46 @@
       background: rgba(255, 255, 255, 0.8);
       border-color: var(--line);
     }
+    .button-ghost {
+      color: var(--muted);
+      background: transparent;
+      border-color: transparent;
+    }
 
     .hero {
       display: grid;
-      gap: 28px;
       grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
       align-items: center;
-      padding: 38px 0 18px;
+      padding: 36px 0 20px;
     }
+
     .eyebrow {
       display: inline-flex;
-      gap: 8px;
       align-items: center;
+      gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
       border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
       color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
       text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 700;
     }
+
     h1, h2, h3, p { margin: 0; }
     h1 {
       margin-top: 18px;
-      max-width: 12ch;
-      font-size: clamp(2.8rem, 6vw, 5.6rem);
+      max-width: 11ch;
+      font-size: clamp(2.9rem, 6vw, 5.8rem);
       line-height: 0.95;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.06em;
     }
     .lead {
       margin-top: 18px;
-      max-width: 60ch;
+      max-width: 62ch;
       color: var(--muted);
       line-height: 1.75;
       font-size: 1.05rem;
@@ -149,7 +163,7 @@
       gap: 12px;
     }
     .pill-row {
-      margin-top: 22px;
+      margin-top: 20px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -159,17 +173,17 @@
       align-items: center;
       border-radius: 999px;
       padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.82);
       border: 1px solid var(--line);
-      font-size: 0.9rem;
       color: var(--muted);
+      font-size: 0.9rem;
     }
 
     .showcase {
       border-radius: 28px;
       overflow: hidden;
-      background: linear-gradient(180deg, #101827 0%, #18304d 48%, #ffffff 48%, #ffffff 100%);
       box-shadow: var(--shadow);
+      background: linear-gradient(180deg, #101827 0%, #18304d 50%, #fff 50%, #fff 100%);
     }
     .showcase-top {
       padding: 24px;
@@ -182,16 +196,16 @@
     }
     .showcase-grid {
       display: grid;
-      gap: 12px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
       padding: 22px;
     }
     .mini-card {
       border-radius: 22px;
-      background: var(--bg);
       border: 1px solid var(--line);
-      padding: 16px;
+      background: var(--bg);
       min-height: 120px;
+      padding: 16px;
     }
     .mini-card strong {
       display: block;
@@ -213,39 +227,22 @@
       display: flex;
       justify-content: space-between;
       align-items: end;
-      gap: 20px;
+      gap: 18px;
       flex-wrap: wrap;
       margin-bottom: 16px;
     }
     .section-head p {
-      color: var(--muted);
       margin-top: 8px;
-      line-height: 1.7;
       max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.7;
     }
     .section-title {
       font-size: clamp(1.8rem, 3vw, 3rem);
       letter-spacing: -0.04em;
     }
 
-    .creator-strip {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .creator {
-      border-radius: 20px;
-      padding: 18px 16px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
-      text-align: center;
-      font-weight: 700;
-      box-shadow: 0 10px 24px rgba(15, 28, 42, 0.05);
-    }
-
-    .grid-2,
-    .grid-3,
-    .grid-4 {
+    .grid-2, .grid-3, .grid-4 {
       display: grid;
       gap: 14px;
     }
@@ -255,11 +252,12 @@
 
     .card {
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.84);
       border: 1px solid var(--line);
+      background: var(--card);
       padding: 22px;
       box-shadow: 0 12px 30px rgba(15, 28, 42, 0.06);
     }
+
     .card h3 { font-size: 1.2rem; }
     .card p {
       margin-top: 10px;
@@ -267,67 +265,229 @@
       line-height: 1.65;
     }
 
-    .feature {
-      min-height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
     .feature-badge {
       display: inline-flex;
+      align-items: center;
       width: fit-content;
-      padding: 8px 12px;
       border-radius: 999px;
+      padding: 8px 12px;
       background: var(--accent-soft);
       color: var(--ink);
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-    .mock-graph {
-      height: 90px;
+
+    .hero-panel {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat {
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 16px;
+    }
+    .stat small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .stat strong {
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+    }
+
+    .auth-shell {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .input, .textarea, .select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 13px;
+      outline: none;
+    }
+    .textarea { min-height: 88px; resize: vertical; }
+    .input:focus, .textarea:focus, .select:focus {
+      border-color: rgba(15, 28, 42, 0.3);
+      box-shadow: 0 0 0 4px rgba(243, 155, 23, 0.12);
+    }
+
+    .message {
+      border-radius: 14px;
+      padding: 12px 13px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .message.show { display: block; }
+    .message.error { background: rgba(207, 74, 60, 0.12); color: var(--danger); }
+    .message.success { background: rgba(43, 185, 167, 0.12); color: #0f7e70; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #a7b4c3;
+    }
+    .status-dot.on { background: var(--mint); }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+    .list-item {
       border-radius: 18px;
-      background:
-        linear-gradient(135deg, rgba(16, 24, 39, 0.96), rgba(243, 155, 23, 0.65)),
-        linear-gradient(90deg, transparent 0 14%, rgba(255,255,255,0.18) 14% 15%, transparent 15% 33%, rgba(255,255,255,0.18) 33% 34%, transparent 34% 52%, rgba(255,255,255,0.18) 52% 53%, transparent 53% 71%, rgba(255,255,255,0.18) 71% 72%, transparent 72% 100%);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      padding: 14px;
+    }
+    .list-item strong { display: block; }
+    .list-meta {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .creator-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .creator-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 220px;
+    }
+
+    .creator-card .top {
+      display: grid;
+      gap: 8px;
+    }
+
+    .creator-card .name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .creator-card .bio {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .monetize-bar {
+      border-radius: 16px;
+      height: 12px;
+      background: rgba(15, 28, 42, 0.08);
+      overflow: hidden;
+    }
+    .monetize-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--mint), var(--accent));
     }
 
     .cta {
       margin: 24px 0 40px;
       overflow: hidden;
       border-radius: 30px;
-      background: linear-gradient(135deg, #101827 0%, #1e3a5f 50%, #f39b17 170%);
       color: #fff;
+      background: linear-gradient(135deg, #101827 0%, #1d3653 48%, #f39b17 170%);
       box-shadow: var(--shadow);
     }
     .cta-inner {
       display: grid;
-      gap: 14px;
       grid-template-columns: 1fr auto;
+      gap: 14px;
       align-items: center;
       padding: 28px;
     }
-    .cta p { color: rgba(255, 255, 255, 0.78); line-height: 1.7; margin-top: 8px; }
+    .cta p {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.7;
+    }
+
     .footer {
       padding: 0 0 32px;
-      color: var(--muted);
       text-align: center;
+      color: var(--muted);
       font-size: 0.92rem;
     }
 
-    @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; }
-      .creator-strip, .grid-4, .grid-3, .grid-2, .showcase-grid { grid-template-columns: 1fr 1fr; }
-      .cta-inner { grid-template-columns: 1fr; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(10, 15, 20, 0.48);
+      z-index: 40;
+    }
+    .modal.show { display: flex; }
+    .modal-card {
+      width: min(560px, 100%);
+      max-height: 90vh;
+      overflow: auto;
     }
 
-    @media (max-width: 640px) {
-      .wrap { width: min(100% - 22px, 1180px); }
-      .creator-strip, .grid-4, .grid-3, .grid-2, .showcase-grid { grid-template-columns: 1fr; }
-      h1 { max-width: none; }
-      .actions { flex-direction: column; }
+    @media (max-width: 980px) {
+      .hero, .cta-inner { grid-template-columns: 1fr; }
+      .grid-2, .grid-3, .grid-4, .showcase-grid, .hero-panel { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 18px, 1180px); }
+      .grid-2, .grid-3, .grid-4, .showcase-grid, .hero-panel { grid-template-columns: 1fr; }
+      .actions, .toolbar { flex-direction: column; align-items: stretch; }
       .button { width: 100%; }
+      h1 { max-width: none; }
     }
   </style>
 </head>
@@ -339,651 +499,714 @@
         <span>DONATO</span>
       </a>
       <nav class="nav" aria-label="Primary">
+        <a href="#auth">Auth</a>
         <a href="#creators">Creators</a>
-        <a href="#platform">Platform</a>
-        <a href="#toolkit">Toolkit</a>
+        <a href="#dashboard">Dashboard</a>
       </nav>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a class="button button-secondary" href="client/index.html">Open app</a>
-        <a class="button button-primary" href="#cta">Get started</a>
+      <div class="toolbar">
+        <span class="status-chip"><span class="status-dot" id="sessionDot"></span><span id="sessionText">Not signed in</span></span>
+        <a class="button button-secondary" href="client/index.html">Open React app</a>
+        <button class="button button-primary" id="scrollAuthBtn" type="button">Sign in</button>
       </div>
     </div>
   </header>
 
   <main id="top" class="wrap">
-    <section class="section" style="padding-top: 18px;">
-      <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; background:rgba(255,255,255,0.9);">
-        <div>
-          <div class="eyebrow">Real app entry</div>
-          <h2 class="section-title" style="font-size: 1.8rem; margin-top: 10px;">Open the full DONATO app for Google login and account creation.</h2>
-          <p style="margin-top:8px; color:var(--muted); line-height:1.6; max-width:68ch;">
-            This root page is a landing page. The working authentication experience lives in the React app.
-          </p>
-        </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a class="button button-primary" href="client/index.html">Open app</a>
-          <a class="button button-secondary" href="client/index.html#/login">Go to login</a>
-        </div>
-      </div>
-    </section>
-
     <section class="hero">
       <div>
-        <div class="eyebrow">Creator monetization platform</div>
-        <h1>Build a supporter-driven income stream.</h1>
+        <div class="eyebrow">Real website entry</div>
+        <h1>Build, sign in, and support creators.</h1>
         <p class="lead">
-          DONATO gives creators and streamers a clean place to receive tips, showcase their work,
-          and manage support from a polished, modern web experience.
+          This page talks to the DONATO backend directly, so you can register, log in with phone or email,
+          start Google OAuth, browse creators, and make donations from the repo itself.
         </p>
         <div class="actions">
-          <a class="button button-primary" href="client/index.html">Open full app</a>
-          <a class="button button-secondary" href="#platform">See platform features</a>
+          <button class="button button-primary" id="goAuthBtn" type="button">Open auth</button>
+          <a class="button button-secondary" href="#creators">Browse creators</a>
+          <a class="button button-secondary" href="client/index.html">Full React app</a>
         </div>
         <div class="pill-row">
-          <span class="pill">Create</span>
-          <span class="pill">Customize</span>
-          <span class="pill">Monetize</span>
-          <span class="pill">Phone sign-in</span>
           <span class="pill">Google sign-in</span>
+          <span class="pill">Phone login</span>
+          <span class="pill">Email login</span>
+          <span class="pill">Register account</span>
+          <span class="pill">Donate live</span>
         </div>
       </div>
 
       <div class="showcase">
         <div class="showcase-top">
-          <div class="eyebrow" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.78); border-color:rgba(255,255,255,0.12);">Live creator dashboard</div>
+          <div class="eyebrow" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.78); border-color: rgba(255,255,255,0.12);">Live product view</div>
           <h2>DONATO</h2>
-          <p style="margin-top:10px; max-width:48ch; color:rgba(255,255,255,0.76); line-height:1.65;">
-            A creator-first surface for tips, donations, and audience engagement.
+          <p style="margin-top:10px; max-width:52ch; color: rgba(255,255,255,0.76); line-height:1.7;">
+            A creator monetization platform with a real backend, session cookies, and working donation APIs.
           </p>
         </div>
         <div class="showcase-grid">
           <div class="mini-card">
-            <span class="feature-badge">Revenue</span>
-            <strong>NPR 28,450</strong>
-            <p>Total tips received this month.</p>
+            <span class="feature-badge">Auth</span>
+            <strong>Live login</strong>
+            <p>Phone, email, password, and Google OAuth routes.</p>
           </div>
           <div class="mini-card">
-            <span class="feature-badge">Supporters</span>
-            <strong>1,284</strong>
-            <p>Audience members supporting live creators.</p>
+            <span class="feature-badge">Support</span>
+            <strong>Donate</strong>
+            <p>Pick a streamer and send a payment-backed tip.</p>
           </div>
           <div class="mini-card">
-            <span class="feature-badge">Sync</span>
-            <strong>Instant</strong>
-            <p>Fast updates for live donation activity.</p>
+            <span class="feature-badge">Status</span>
+            <strong id="quickStatus">Guest</strong>
+            <p id="quickStatusText">Sign in to see your dashboard.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="auth" class="section">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Authentication</div>
+          <h2 class="section-title">Sign in, create an account, or use Google.</h2>
+          <p>The forms below call the backend directly. When the server is running with Google env vars set, OAuth will work too.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <article class="card auth-shell">
+          <div class="toolbar">
+            <button class="button button-primary" id="loginTabBtn" type="button">Login</button>
+            <button class="button button-secondary" id="registerTabBtn" type="button">Register</button>
+            <button class="button button-secondary" id="googleBtn" type="button">Continue with Google</button>
+          </div>
+          <div id="loginPanel">
+            <h3>Login</h3>
+            <p>Use your phone number or email with password.</p>
+            <form id="loginForm" class="auth-shell" style="margin-top:14px;">
+              <label class="field">
+                Phone or Email
+                <input class="input" name="identifier" placeholder="9800000000 or you@example.com" required />
+              </label>
+              <label class="field">
+                Password
+                <input class="input" name="password" type="password" required />
+              </label>
+              <div id="loginMessage" class="message"></div>
+              <button class="button button-primary" type="submit">Login</button>
+            </form>
+          </div>
+
+          <div id="registerPanel" hidden>
+            <h3>Create account</h3>
+            <p>Register as a user or streamer and start using DONATO immediately.</p>
+            <form id="registerForm" class="auth-shell" style="margin-top:14px;">
+              <label class="field">
+                Full name
+                <input class="input" name="name" placeholder="Your name" required />
+              </label>
+              <div class="grid-2">
+                <label class="field">
+                  Email
+                  <input class="input" name="email" type="email" placeholder="you@example.com" />
+                </label>
+                <label class="field">
+                  Phone
+                  <input class="input" name="phone" placeholder="9800000000" />
+                </label>
+              </div>
+              <label class="field">
+                Password
+                <input class="input" name="password" type="password" minlength="6" required />
+              </label>
+              <div class="grid-2">
+                <label class="field">
+                  Account type
+                  <select class="select" name="role" id="roleSelect">
+                    <option value="user">User</option>
+                    <option value="streamer">Streamer</option>
+                  </select>
+                </label>
+                <label class="field">
+                  Display name
+                  <input class="input" name="displayName" placeholder="Required for streamers" />
+                </label>
+              </div>
+              <label class="field">
+                Bio
+                <textarea class="textarea" name="bio" placeholder="Tell supporters what you create"></textarea>
+              </label>
+              <div id="registerMessage" class="message"></div>
+              <button class="button button-primary" type="submit">Create account</button>
+            </form>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-head" style="margin-bottom:12px;">
+            <div>
+              <div class="eyebrow">Session</div>
+              <h3 class="section-title" style="font-size:1.7rem; margin-top:10px;">Your live account state</h3>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="stat"><small>Status</small><strong id="sessionStateText">Signed out</strong></div>
+            <div class="stat"><small>Role</small><strong id="sessionRoleText">Guest</strong></div>
+            <div class="stat"><small>Name</small><strong id="sessionNameText">None</strong></div>
+            <div class="stat"><small>Actions</small><strong id="sessionActionText">Login or register</strong></div>
+          </div>
+
+          <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="button button-primary" id="logoutBtn" type="button" hidden>Logout</button>
+            <button class="button button-secondary" id="refreshBtn" type="button">Refresh session</button>
+          </div>
+
+          <div id="sessionMessage" class="message" style="margin-top:14px;"></div>
+        </article>
       </div>
     </section>
 
     <section id="creators" class="section">
       <div class="section-head">
         <div>
-          <div class="eyebrow">Trusted creators</div>
-          <h2 class="section-title">A creator directory that feels active.</h2>
-          <p>Browse featured creators and get a sense of the kind of profile DONATO is built to support.</p>
+          <div class="eyebrow">Creators</div>
+          <h2 class="section-title">Browse streamers and donate directly.</h2>
+          <p>These cards load from the backend, so the page behaves like a real product instead of a static mockup.</p>
         </div>
-        <a class="button button-secondary" href="client/index.html">Browse creators in app</a>
+        <button class="button button-secondary" id="reloadStreamersBtn" type="button">Reload creators</button>
       </div>
-      <div class="creator-strip">
-        <div class="creator">AaryaLive</div>
-        <div class="creator">SkyHorizon</div>
-        <div class="creator">Crystal18</div>
-        <div class="creator">ShuvaStream</div>
-        <div class="creator">KhatraCast</div>
+      <div id="streamerGrid" class="creator-grid"></div>
+      <div id="streamerMessage" class="message" style="margin-top:14px;"></div>
+    </section>
+
+    <section id="dashboard" class="section">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Dashboard</div>
+          <h2 class="section-title">Account totals update from the API.</h2>
+          <p>Once you log in, this section shows real donation totals and your recent history.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card stat"><small>Total donated</small><strong id="totalDonatedText">NPR 0.00</strong></div>
+        <div class="card stat"><small>Total received</small><strong id="totalReceivedText">NPR 0.00</strong></div>
+        <div class="card stat"><small>Donation count</small><strong id="donationCountText">0</strong></div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="section-head" style="margin-bottom:12px;">
+          <div>
+            <h3>Recent donations</h3>
+            <p>Loaded from /donations/user after sign in.</p>
+          </div>
+        </div>
+        <div id="donationList" class="list"></div>
       </div>
     </section>
 
     <section class="section">
       <div class="grid-2">
         <article class="card">
-          <span class="feature-badge">For content creators</span>
-          <h3 style="margin-top:12px;">Reward supporters with a clean tip flow.</h3>
-          <p>Use DONATO to collect contributions, surface supporter messages, and keep your creator page focused on conversion.</p>
+          <span class="feature-badge">Why this is real</span>
+          <h3 style="margin-top:12px;">It uses the backend you already have.</h3>
+          <p>Auth, Google OAuth, user sessions, creator browsing, donations, and dashboards are wired to the Express API.</p>
         </article>
         <article class="card">
-          <span class="feature-badge">For live streamers</span>
-          <h3 style="margin-top:12px;">Turn live activity into a real-time experience.</h3>
-          <p>Show donations, track engagement, and keep your audience connected with a dashboard that feels alive.</p>
+          <span class="feature-badge">What to check</span>
+          <h3 style="margin-top:12px;">Set Google env vars and run the server.</h3>
+          <p>If Google login is still failing, the server needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL configured.</p>
         </article>
       </div>
     </section>
 
-    <section id="platform" class="section">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">Platform features</div>
-          <h2 class="section-title">Everything you need in one platform.</h2>
-          <p>Built to support creator growth, flexible payments, and polished presentation from the start.</p>
-        </div>
-      </div>
-      <div class="grid-3">
-        <article class="card feature">
-          <div>
-            <h3>Multiple payment options</h3>
-            <p>Use a flexible payment layer that can support gateways like eSewa, Khalti, or mock flows for demos.</p>
-          </div>
-          <div class="mock-graph"></div>
-        </article>
-        <article class="card feature">
-          <div>
-            <h3>Creator revenue tracking</h3>
-            <p>Monitor tip totals, supporter history, and earnings in a layout that is easy to understand at a glance.</p>
-          </div>
-          <div class="mock-graph"></div>
-        </article>
-        <article class="card feature">
-          <div>
-            <h3>Compliance-friendly structure</h3>
-            <p>Keep the system adaptable for local requirements, credentials, and deployment targets.</p>
-          </div>
-          <div class="mock-graph"></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="toolkit" class="section">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">Toolkit</div>
-          <h2 class="section-title">Creator tools that feel useful, not cluttered.</h2>
-        </div>
-      </div>
-      <div class="grid-4">
-        <article class="card"><h3>Tipping</h3><p>Collect audience support with a simple donation flow.</p></article>
-        <article class="card"><h3>Link in bio</h3><p>Share one profile that connects your supporters to everything.</p></article>
-        <article class="card"><h3>Streaming widgets</h3><p>Use live alerts and on-stream moments to keep fans engaged.</p></article>
-        <article class="card"><h3>Multi-platform reach</h3><p>Build one creator presence that works across channels.</p></article>
-      </div>
-    </section>
-
-    <section id="cta" class="cta section">
+    <section class="cta section">
       <div class="cta-inner">
         <div>
-          <div class="eyebrow" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.76); border-color:rgba(255,255,255,0.12);">Get started</div>
-          <h2 class="section-title" style="color:#fff; margin-top:12px;">Open DONATO and start building your creator page.</h2>
-          <p>Use the full React app in the repo for auth, dashboards, and donation flows, or keep this file as the lightweight landing page entrypoint.</p>
+          <div class="eyebrow" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); border-color: rgba(255,255,255,0.12);">Get started</div>
+          <h2 class="section-title" style="color:#fff; margin-top:12px;">Use the real DONATO website from the repo.</h2>
+          <p>Open this file, sign in, or launch the React app from client/index.html for the full production-style experience.</p>
         </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a class="button button-secondary" href="client/index.html">Open app</a>
+        <div class="actions" style="margin-top:0;">
+          <a class="button button-secondary" href="client/index.html">Open React app</a>
+          <button class="button button-primary" id="ctaAuthBtn" type="button">Sign in now</button>
         </div>
       </div>
     </section>
 
-    <p class="footer">Standalone index page for opening the repo directly. The full app lives in the client folder.</p>
+    <p class="footer">Standalone root website for local use. The same backend powers the full React client in the repo.</p>
   </main>
-</body>
-</html>
 
-      const donor = {
-        id: uid('u'),
-        name: 'Aarya Donor',
-        email: 'donor@donato.local',
-        phone: '9800000001',
-        password: 'password123',
-        role: 'user'
-      };
+  <div class="modal" id="donationModal" aria-hidden="true">
+    <div class="card modal-card">
+      <div class="section-head" style="margin-bottom:12px;">
+        <div>
+          <div class="eyebrow">Donate</div>
+          <h3 class="section-title" id="donationTitle" style="font-size:1.6rem; margin-top:10px;">Support creator</h3>
+        </div>
+        <button class="button button-ghost" id="closeDonationModalBtn" type="button">Close</button>
+      </div>
+      <form id="donationForm" class="auth-shell">
+        <input type="hidden" name="streamerId" />
+        <label class="field">
+          Amount
+          <input class="input" name="amount" type="number" min="1" step="1" value="100" required />
+        </label>
+        <label class="field">
+          Message
+          <textarea class="textarea" name="message" placeholder="Write a message of support"></textarea>
+        </label>
+        <label class="field">
+          Payment method
+          <select class="select" name="paymentMethod">
+            <option value="mock">Mock</option>
+            <option value="esewa">eSewa</option>
+            <option value="khalti">Khalti</option>
+          </select>
+        </label>
+        <div id="donationMessage" class="message"></div>
+        <div class="toolbar">
+          <button class="button button-primary" type="submit">Send donation</button>
+          <button class="button button-secondary" id="cancelDonationBtn" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-      const streamerUser = {
-        id: uid('u'),
-        name: 'Sujan Streamer',
-        email: 'streamer@donato.local',
-        phone: '9800000002',
-        password: 'password123',
-        role: 'streamer'
-      };
+  <script>
+    const state = {
+      user: null,
+      streamer: null,
+      streamers: [],
+      donations: [],
+      donationTarget: null,
+      authTab: 'login'
+    };
 
-      const secondStreamerUser = {
-        id: uid('u'),
-        name: 'Mina Creates',
-        email: 'mina@donato.local',
-        phone: '9800000003',
-        password: 'password123',
-        role: 'streamer'
-      };
+    const apiBase = (() => {
+      const hostname = window.location.hostname;
+      const isLocalFile = window.location.protocol === 'file:';
+      if (isLocalFile || hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
+        return 'http://localhost:5000';
+      }
+      return '/api';
+    })();
 
-      const streamers = [
-        {
-          id: uid('s'),
-          userId: streamerUser.id,
-          displayName: 'SujanPlays',
-          bio: 'Gaming and coding live streams.',
-          totalEarnings: 0
+    const $ = (id) => document.getElementById(id);
+
+    const els = {
+      sessionDot: $('sessionDot'),
+      sessionText: $('sessionText'),
+      sessionStateText: $('sessionStateText'),
+      sessionRoleText: $('sessionRoleText'),
+      sessionNameText: $('sessionNameText'),
+      sessionActionText: $('sessionActionText'),
+      quickStatus: $('quickStatus'),
+      quickStatusText: $('quickStatusText'),
+      loginTabBtn: $('loginTabBtn'),
+      registerTabBtn: $('registerTabBtn'),
+      loginPanel: $('loginPanel'),
+      registerPanel: $('registerPanel'),
+      googleBtn: $('googleBtn'),
+      loginForm: $('loginForm'),
+      registerForm: $('registerForm'),
+      loginMessage: $('loginMessage'),
+      registerMessage: $('registerMessage'),
+      sessionMessage: $('sessionMessage'),
+      streamerGrid: $('streamerGrid'),
+      streamerMessage: $('streamerMessage'),
+      donationList: $('donationList'),
+      totalDonatedText: $('totalDonatedText'),
+      totalReceivedText: $('totalReceivedText'),
+      donationCountText: $('donationCountText'),
+      donationModal: $('donationModal'),
+      donationTitle: $('donationTitle'),
+      donationForm: $('donationForm'),
+      donationMessage: $('donationMessage'),
+      logoutBtn: $('logoutBtn'),
+      refreshBtn: $('refreshBtn'),
+      reloadStreamersBtn: $('reloadStreamersBtn'),
+      goAuthBtn: $('goAuthBtn'),
+      scrollAuthBtn: $('scrollAuthBtn'),
+      ctaAuthBtn: $('ctaAuthBtn'),
+      cancelDonationBtn: $('cancelDonationBtn'),
+      closeDonationModalBtn: $('closeDonationModalBtn'),
+      roleSelect: $('roleSelect')
+    };
+
+    function money(value) {
+      return 'NPR ' + Number(value || 0).toFixed(2);
+    }
+
+    function setMessage(element, text, type) {
+      if (!element) return;
+      element.textContent = text || '';
+      element.className = 'message';
+      if (!text) return;
+      element.classList.add('show');
+      element.classList.add(type === 'error' ? 'error' : 'success');
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(apiBase + path, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
         },
-        {
-          id: uid('s'),
-          userId: secondStreamerUser.id,
-          displayName: 'MinaMakes',
-          bio: 'Digital art, UX builds, and chill talks.',
-          totalEarnings: 0
-        }
-      ];
+        ...options
+      });
 
-      const users = [donor, streamerUser, secondStreamerUser];
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (error) {
+        data = {};
+      }
 
-      const firstDonationAmount = 100;
-      const firstCommission = Number(((firstDonationAmount * COMMISSION_RATE) / 100).toFixed(2));
-      const firstNet = Number((firstDonationAmount - firstCommission).toFixed(2));
+      if (!response.ok) {
+        throw new Error(data.message || 'Request failed');
+      }
 
-      streamers[0].totalEarnings = firstNet;
-
-      const donations = [
-        {
-          id: uid('d'),
-          userId: donor.id,
-          streamerId: streamers[0].id,
-          amount: firstDonationAmount,
-          message: 'Great stream. Keep going.',
-          paymentMethod: 'mock',
-          status: 'success',
-          platformCommission: firstCommission,
-          streamerEarning: firstNet,
-          createdAt: new Date().toISOString()
-        }
-      ];
-
-      save(KEYS.users, users);
-      save(KEYS.streamers, streamers);
-      save(KEYS.donations, donations);
-      localStorage.removeItem(KEYS.session);
+      return data;
     }
 
-    function getUsers() {
-      return load(KEYS.users, []);
+    function authUrl() {
+      if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '') {
+        return 'http://localhost:5000/auth/google';
+      }
+      return '/api/auth/google';
     }
 
-    function getStreamers() {
-      return load(KEYS.streamers, []);
+    function setAuthTab(tab) {
+      state.authTab = tab;
+      els.loginPanel.hidden = tab !== 'login';
+      els.registerPanel.hidden = tab !== 'register';
+      els.loginTabBtn.className = tab === 'login' ? 'button button-primary' : 'button button-secondary';
+      els.registerTabBtn.className = tab === 'register' ? 'button button-primary' : 'button button-secondary';
     }
 
-    function getDonations() {
-      return load(KEYS.donations, []);
-    }
-
-    function setUsers(users) {
-      save(KEYS.users, users);
-    }
-
-    function setStreamers(streamers) {
-      save(KEYS.streamers, streamers);
-    }
-
-    function setDonations(donations) {
-      save(KEYS.donations, donations);
-    }
-
-    function setSession(userId) {
-      localStorage.setItem(KEYS.session, userId);
-    }
-
-    function clearSession() {
-      localStorage.removeItem(KEYS.session);
-    }
-
-    function currentUser() {
-      const userId = localStorage.getItem(KEYS.session);
-      if (!userId) return null;
-      return getUsers().find((user) => user.id === userId) || null;
-    }
-
-    function getStreamerById(streamerId) {
-      return getStreamers().find((streamer) => streamer.id === streamerId) || null;
-    }
-
-    function getStreamerByUserId(userId) {
-      return getStreamers().find((streamer) => streamer.userId === userId) || null;
-    }
-
-    function setAuthMessage(text, type) {
-      authMessage.textContent = text;
-      authMessage.className = 'note';
-      if (type === 'error') authMessage.classList.add('danger-text');
-      if (type === 'success') authMessage.classList.add('success-text');
-    }
-
-    function renderTopActions(user) {
-      userDashBtn.classList.toggle('hidden', !user);
-      logoutBtn.classList.toggle('hidden', !user);
-
-      const showStreamerBtn = user && user.role === 'streamer';
-      streamerDashBtn.classList.toggle('hidden', !showStreamerBtn);
+    function updateSessionUi() {
+      const signedIn = Boolean(state.user);
+      els.sessionDot.className = signedIn ? 'status-dot on' : 'status-dot';
+      els.sessionText.textContent = signedIn ? `${state.user.name} signed in` : 'Not signed in';
+      els.sessionStateText.textContent = signedIn ? 'Signed in' : 'Signed out';
+      els.sessionRoleText.textContent = signedIn ? state.user.role : 'Guest';
+      els.sessionNameText.textContent = signedIn ? state.user.name : 'None';
+      els.sessionActionText.textContent = signedIn ? 'Open your dashboard' : 'Login or register';
+      els.quickStatus.textContent = signedIn ? state.user.name : 'Guest';
+      els.quickStatusText.textContent = signedIn
+        ? `Role: ${state.user.role}${state.streamer ? `, creator page: ${state.streamer.displayName}` : ''}`
+        : 'Sign in to see your dashboard.';
+      els.logoutBtn.hidden = !signedIn;
     }
 
     function renderStreamers() {
-      const user = currentUser();
-      const streamers = getStreamers();
+      els.streamerGrid.innerHTML = '';
 
-      streamerGrid.innerHTML = '';
+      if (!state.streamers.length) {
+        els.streamerGrid.innerHTML = '<div class="card">No creators found.</div>';
+        return;
+      }
 
-      streamers.forEach((streamer) => {
+      state.streamers.forEach((streamer) => {
         const card = document.createElement('article');
-        card.className = 'card';
+        card.className = 'card creator-card';
 
-        const isSelf = user && streamer.userId === user.id;
+        const top = document.createElement('div');
+        top.className = 'top';
 
-        card.innerHTML = [
-          '<span class="pill">Live-ready streamer</span>',
-          '<h3 style="margin-bottom:6px;">' + streamer.displayName + '</h3>',
-          '<p class="muted" style="margin-bottom:8px;">' + (streamer.bio || 'No bio yet.') + '</p>',
-          '<p style="font-weight:700; margin-bottom:10px;">Total Earnings: ' + money(streamer.totalEarnings) + '</p>'
-        ].join('');
+        const badge = document.createElement('span');
+        badge.className = 'feature-badge';
+        badge.textContent = 'Live creator';
 
-        const action = document.createElement('button');
-        action.textContent = isSelf ? 'This is your streamer account' : 'Donate';
-        action.disabled = isSelf;
-        action.className = isSelf ? 'secondary' : '';
+        const name = document.createElement('div');
+        name.className = 'name';
+        name.textContent = streamer.displayName || 'Streamer';
 
-        action.addEventListener('click', () => {
-          openDonationModal(streamer);
-        });
+        const bio = document.createElement('div');
+        bio.className = 'bio';
+        bio.textContent = streamer.bio || 'No bio yet.';
 
-        card.appendChild(action);
-        streamerGrid.appendChild(card);
+        const bar = document.createElement('div');
+        bar.className = 'monetize-bar';
+        const inner = document.createElement('span');
+        inner.style.width = Math.min(100, Math.max(10, Number(streamer.totalEarnings || 0) / 10)) + '%';
+        bar.appendChild(inner);
+
+        const earnings = document.createElement('div');
+        earnings.className = 'stat';
+        earnings.innerHTML = `<small>Total earnings</small><strong>${money(streamer.totalEarnings)}</strong>`;
+
+        top.appendChild(badge);
+        top.appendChild(name);
+        top.appendChild(bio);
+        top.appendChild(bar);
+
+        const footer = document.createElement('div');
+        footer.className = 'toolbar';
+
+        const donateBtn = document.createElement('button');
+        donateBtn.className = 'button button-primary';
+        donateBtn.type = 'button';
+        donateBtn.textContent = 'Donate';
+        donateBtn.addEventListener('click', () => openDonationModal(streamer));
+
+        const viewBtn = document.createElement('a');
+        viewBtn.className = 'button button-secondary';
+        viewBtn.href = '#dashboard';
+        viewBtn.textContent = 'View dashboard';
+
+        footer.appendChild(donateBtn);
+        footer.appendChild(viewBtn);
+
+        card.appendChild(top);
+        card.appendChild(earnings);
+        card.appendChild(footer);
+        els.streamerGrid.appendChild(card);
       });
     }
 
-    function renderUserDashboard() {
-      const user = currentUser();
-      if (!user) {
-        userDashboardCard.classList.add('hidden');
+    function renderDonations() {
+      els.donationList.innerHTML = '';
+
+      if (!state.donations.length) {
+        els.donationList.innerHTML = '<div class="list-item">No donations yet.</div>';
+        els.donationCountText.textContent = '0';
         return;
       }
 
-      const donations = getDonations().filter((donation) => donation.userId === user.id && donation.status === 'success');
-      const total = donations.reduce((sum, donation) => sum + donation.amount, 0);
-
-      userTotalDonated.textContent = money(total);
-
-      userDonationHistory.innerHTML = donations.length
-        ? ''
-        : '<p class="note">No donations yet.</p>';
-
-      donations
-        .slice()
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .forEach((donation) => {
-          const streamer = getStreamerById(donation.streamerId);
-          const item = document.createElement('div');
-          item.className = 'list-item';
-          item.innerHTML = [
-            '<strong>To: ' + (streamer ? streamer.displayName : 'Unknown streamer') + '</strong>',
-            '<div class="meta">' + money(donation.amount) + ' | ' + donation.paymentMethod.toUpperCase() + '</div>',
-            '<div style="margin-top:4px;">' + (donation.message || 'No message') + '</div>',
-            '<div class="meta">' + new Date(donation.createdAt).toLocaleString() + '</div>'
-          ].join('');
-          userDonationHistory.appendChild(item);
-        });
-
-      userDashboardCard.classList.remove('hidden');
-    }
-
-    function renderStreamerDashboard() {
-      const user = currentUser();
-      if (!user || user.role !== 'streamer') {
-        streamerDashboardCard.classList.add('hidden');
-        return;
-      }
-
-      const streamer = getStreamerByUserId(user.id);
-      if (!streamer) {
-        streamerDashboardCard.classList.add('hidden');
-        return;
-      }
-
-      const donations = getDonations()
-        .filter((donation) => donation.streamerId === streamer.id && donation.status === 'success')
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-      streamerTotalEarnings.textContent = money(streamer.totalEarnings);
-      document.getElementById('commissionRateText').textContent = COMMISSION_RATE + '%';
-
-      streamerFeed.innerHTML = donations.length ? '' : '<p class="note">No live donations yet.</p>';
-
-      const users = getUsers();
-
-      donations.forEach((donation) => {
-        const donor = users.find((candidate) => candidate.id === donation.userId);
+      els.donationCountText.textContent = String(state.donations.length);
+      state.donations.forEach((donation) => {
         const item = document.createElement('div');
         item.className = 'list-item';
-        item.innerHTML = [
-          '<strong>' + (donor ? donor.name : 'Unknown donor') + ' donated ' + money(donation.amount) + '</strong>',
-          '<div style="margin-top:4px;">' + (donation.message || 'No message') + '</div>',
-          '<div class="meta">Platform cut: ' + money(donation.platformCommission) + ' | Net: ' + money(donation.streamerEarning) + '</div>',
-          '<div class="meta">' + new Date(donation.createdAt).toLocaleString() + '</div>'
-        ].join('');
-        streamerFeed.appendChild(item);
-      });
 
-      streamerDashboardCard.classList.remove('hidden');
+        const title = document.createElement('strong');
+        title.textContent = `${donation.streamerName || 'Streamer'} • ${money(donation.amount)}`;
+
+        const meta = document.createElement('div');
+        meta.className = 'list-meta';
+        meta.textContent = `${donation.paymentMethod.toUpperCase()} • ${new Date(donation.createdAt).toLocaleString()}`;
+
+        const msg = document.createElement('div');
+        msg.className = 'list-meta';
+        msg.textContent = donation.message || 'No message';
+
+        item.appendChild(title);
+        item.appendChild(meta);
+        item.appendChild(msg);
+        els.donationList.appendChild(item);
+      });
     }
 
     function openDonationModal(streamer) {
-      const user = currentUser();
-      if (!user) {
-        setAuthMessage('Please login first to donate.', 'error');
-        authCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!state.user) {
+        setMessage(els.sessionMessage, 'Log in first, then donate.', 'error');
+        document.getElementById('auth').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setAuthTab('login');
         return;
       }
 
-      donationModalTitle.textContent = 'Donate to ' + streamer.displayName;
-      donationForm.streamerId.value = streamer.id;
-      donationForm.amount.value = 100;
-      donationForm.message.value = '';
-      donationForm.paymentMethod.value = 'mock';
-      donationMessage.textContent = '';
-      donationModal.style.display = 'flex';
+      state.donationTarget = streamer;
+      els.donationTitle.textContent = `Support ${streamer.displayName}`;
+      els.donationForm.streamerId.value = streamer.id;
+      els.donationModal.classList.add('show');
+      els.donationModal.setAttribute('aria-hidden', 'false');
+      setMessage(els.donationMessage, '', 'success');
     }
 
     function closeDonationModal() {
-      donationModal.style.display = 'none';
+      els.donationModal.classList.remove('show');
+      els.donationModal.setAttribute('aria-hidden', 'true');
+      state.donationTarget = null;
+      els.donationForm.reset();
+      els.donationForm.amount.value = 100;
+      setMessage(els.donationMessage, '', 'success');
     }
 
-    function rerender() {
-      const user = currentUser();
+    async function refreshSession() {
+      try {
+        const response = await api('/auth/me');
+        state.user = response.user;
+        state.streamer = response.streamer;
+      } catch (error) {
+        state.user = null;
+        state.streamer = null;
+      }
 
-      renderTopActions(user);
-      renderStreamers();
-      renderUserDashboard();
-      renderStreamerDashboard();
+      updateSessionUi();
+      await refreshDashboard();
+    }
 
-      if (user) {
-        authCard.classList.add('hidden');
-      } else {
-        authCard.classList.remove('hidden');
+    async function refreshStreamers() {
+      try {
+        const response = await api('/streamers');
+        state.streamers = response.streamers || [];
+        renderStreamers();
+        setMessage(els.streamerMessage, '', 'success');
+      } catch (error) {
+        setMessage(els.streamerMessage, error.message || 'Unable to load creators', 'error');
+        state.streamers = [];
+        renderStreamers();
       }
     }
 
-    document.getElementById('loginForm').addEventListener('submit', (event) => {
+    async function refreshDashboard() {
+      if (!state.user) {
+        els.totalDonatedText.textContent = money(0);
+        els.totalReceivedText.textContent = money(0);
+        els.donationCountText.textContent = '0';
+        els.donationList.innerHTML = '<div class="list-item">Login to see your dashboard.</div>';
+        return;
+      }
+
+      try {
+        const summary = await api('/donations/summary');
+        els.totalDonatedText.textContent = money(summary.summary?.totalDonated || 0);
+        els.totalReceivedText.textContent = money(summary.summary?.totalReceived || 0);
+      } catch (error) {
+        els.totalDonatedText.textContent = money(0);
+        els.totalReceivedText.textContent = money(0);
+      }
+
+      try {
+        const response = await api('/donations/user');
+        state.donations = response.donations || [];
+        renderDonations();
+      } catch (error) {
+        state.donations = [];
+        renderDonations();
+      }
+    }
+
+    async function handleLogin(event) {
       event.preventDefault();
-      const form = new FormData(event.currentTarget);
-      const identifier = String(form.get('identifier') || '').trim().toLowerCase();
-      const password = String(form.get('password') || '');
+      setMessage(els.loginMessage, 'Logging in...', 'success');
+      const form = new FormData(els.loginForm);
+      const payload = Object.fromEntries(form.entries());
 
-      const users = getUsers();
-      const user = users.find((candidate) => {
-        return (
-          (candidate.email && candidate.email.toLowerCase() === identifier) ||
-          (candidate.phone && candidate.phone === identifier)
-        );
-      });
-
-      if (!user || user.password !== password) {
-        setAuthMessage('Invalid credentials.', 'error');
-        return;
-      }
-
-      setSession(user.id);
-      setAuthMessage('Login successful.', 'success');
-      event.currentTarget.reset();
-      rerender();
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const form = new FormData(event.currentTarget);
-
-      const payload = {
-        name: String(form.get('name') || '').trim(),
-        email: String(form.get('email') || '').trim().toLowerCase(),
-        phone: String(form.get('phone') || '').trim(),
-        password: String(form.get('password') || ''),
-        role: String(form.get('role') || 'user'),
-        displayName: String(form.get('displayName') || '').trim(),
-        bio: String(form.get('bio') || '').trim()
-      };
-
-      if (!payload.email && !payload.phone) {
-        setAuthMessage('Provide email or phone.', 'error');
-        return;
-      }
-
-      if (payload.role === 'streamer' && !payload.displayName) {
-        setAuthMessage('Streamer display name is required for streamer accounts.', 'error');
-        return;
-      }
-
-      const users = getUsers();
-      if (payload.email && users.some((user) => user.email === payload.email)) {
-        setAuthMessage('Email is already used.', 'error');
-        return;
-      }
-
-      if (payload.phone && users.some((user) => user.phone === payload.phone)) {
-        setAuthMessage('Phone is already used.', 'error');
-        return;
-      }
-
-      const user = {
-        id: uid('u'),
-        name: payload.name,
-        email: payload.email || '',
-        phone: payload.phone || '',
-        password: payload.password,
-        role: payload.role
-      };
-
-      users.push(user);
-      setUsers(users);
-
-      if (payload.role === 'streamer') {
-        const streamers = getStreamers();
-        streamers.push({
-          id: uid('s'),
-          userId: user.id,
-          displayName: payload.displayName,
-          bio: payload.bio,
-          totalEarnings: 0
+      try {
+        await api('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(payload)
         });
-        setStreamers(streamers);
+        setMessage(els.loginMessage, 'Login successful.', 'success');
+        await refreshSession();
+      } catch (error) {
+        setMessage(els.loginMessage, error.message || 'Login failed', 'error');
       }
+    }
 
-      setSession(user.id);
-      setAuthMessage('Account created and logged in.', 'success');
-      event.currentTarget.reset();
-      rerender();
-    });
-
-    donationForm.addEventListener('submit', (event) => {
+    async function handleRegister(event) {
       event.preventDefault();
-      const user = currentUser();
-      if (!user) {
-        donationMessage.textContent = 'Login required.';
-        donationMessage.className = 'danger-text';
+      setMessage(els.registerMessage, 'Creating account...', 'success');
+      const form = new FormData(els.registerForm);
+      const payload = Object.fromEntries(form.entries());
+
+      if (payload.role === 'streamer' && !payload.displayName.trim()) {
+        setMessage(els.registerMessage, 'Display name is required for streamers.', 'error');
         return;
       }
 
-      const streamerId = String(donationForm.streamerId.value || '');
-      const amount = Number(donationForm.amount.value);
-      const message = String(donationForm.message.value || '').trim();
-      const paymentMethod = String(donationForm.paymentMethod.value || 'mock');
-
-      if (!streamerId || !amount || amount <= 0) {
-        donationMessage.textContent = 'Enter a valid amount.';
-        donationMessage.className = 'danger-text';
-        return;
+      try {
+        await api('/auth/register', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        setMessage(els.registerMessage, 'Account created and signed in.', 'success');
+        await refreshSession();
+        setAuthTab('login');
+      } catch (error) {
+        setMessage(els.registerMessage, error.message || 'Registration failed', 'error');
       }
+    }
 
-      const streamer = getStreamerById(streamerId);
-      if (!streamer) {
-        donationMessage.textContent = 'Streamer not found.';
-        donationMessage.className = 'danger-text';
-        return;
+    async function handleLogout() {
+      try {
+        await api('/auth/logout', { method: 'POST' });
+        state.user = null;
+        state.streamer = null;
+        state.donations = [];
+        updateSessionUi();
+        await refreshDashboard();
+        setMessage(els.sessionMessage, 'Logged out.', 'success');
+      } catch (error) {
+        setMessage(els.sessionMessage, error.message || 'Logout failed', 'error');
       }
+    }
 
-      if (streamer.userId === user.id) {
-        donationMessage.textContent = 'You cannot donate to your own streamer account.';
-        donationMessage.className = 'danger-text';
-        return;
-      }
+    async function handleDonation(event) {
+      event.preventDefault();
+      const form = new FormData(els.donationForm);
+      const payload = {
+        streamerId: form.get('streamerId'),
+        amount: Number(form.get('amount')),
+        message: String(form.get('message') || ''),
+        paymentMethod: form.get('paymentMethod')
+      };
 
-      const commission = Number(((amount * COMMISSION_RATE) / 100).toFixed(2));
-      const net = Number((amount - commission).toFixed(2));
-
-      const donations = getDonations();
-      donations.push({
-        id: uid('d'),
-        userId: user.id,
-        streamerId,
-        amount,
-        message,
-        paymentMethod,
-        status: 'success',
-        platformCommission: commission,
-        streamerEarning: net,
-        createdAt: new Date().toISOString()
-      });
-      setDonations(donations);
-
-      const streamers = getStreamers();
-      const index = streamers.findIndex((item) => item.id === streamerId);
-      if (index >= 0) {
-        streamers[index].totalEarnings = Number((streamers[index].totalEarnings + net).toFixed(2));
-        setStreamers(streamers);
-      }
-
-      donationMessage.textContent = 'Donation successful. Feed updated instantly.';
-      donationMessage.className = 'success-text';
-
-      rerender();
-
-      setTimeout(() => {
+      try {
+        await api('/donations', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        setMessage(els.donationMessage, 'Donation sent successfully.', 'success');
+        await refreshSession();
+        await refreshStreamers();
         closeDonationModal();
-      }, 400);
-    });
+      } catch (error) {
+        setMessage(els.donationMessage, error.message || 'Donation failed', 'error');
+      }
+    }
 
-    document.getElementById('closeDonationModalBtn').addEventListener('click', closeDonationModal);
-    donationModal.addEventListener('click', (event) => {
-      if (event.target === donationModal) closeDonationModal();
-    });
+    function startGoogleAuth() {
+      window.location.href = authUrl();
+    }
 
-    document.getElementById('homeBtn').addEventListener('click', () => {
-      document.getElementById('heroCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    function authUrl() {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:5000/auth/google';
+      }
+      return '/api/auth/google';
+    }
 
-    userDashBtn.addEventListener('click', () => {
-      userDashboardCard.classList.remove('hidden');
-      userDashboardCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    function setAuthTab(tab) {
+      state.authTab = tab;
+      els.loginPanel.hidden = tab !== 'login';
+      els.registerPanel.hidden = tab !== 'register';
+      els.loginTabBtn.className = tab === 'login' ? 'button button-primary' : 'button button-secondary';
+      els.registerTabBtn.className = tab === 'register' ? 'button button-primary' : 'button button-secondary';
+    }
 
-    streamerDashBtn.addEventListener('click', () => {
-      streamerDashboardCard.classList.remove('hidden');
-      streamerDashboardCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    function bindEvents() {
+      els.loginTabBtn.addEventListener('click', () => setAuthTab('login'));
+      els.registerTabBtn.addEventListener('click', () => setAuthTab('register'));
+      els.googleBtn.addEventListener('click', startGoogleAuth);
+      els.loginForm.addEventListener('submit', handleLogin);
+      els.registerForm.addEventListener('submit', handleRegister);
+      els.logoutBtn.addEventListener('click', handleLogout);
+      els.refreshBtn.addEventListener('click', refreshSession);
+      els.reloadStreamersBtn.addEventListener('click', refreshStreamers);
+      els.goAuthBtn.addEventListener('click', () => document.getElementById('auth').scrollIntoView({ behavior: 'smooth' }));
+      els.scrollAuthBtn.addEventListener('click', () => document.getElementById('auth').scrollIntoView({ behavior: 'smooth' }));
+      els.ctaAuthBtn.addEventListener('click', () => document.getElementById('auth').scrollIntoView({ behavior: 'smooth' }));
+      els.cancelDonationBtn.addEventListener('click', closeDonationModal);
+      els.closeDonationModalBtn.addEventListener('click', closeDonationModal);
+      els.donationModal.addEventListener('click', (event) => {
+        if (event.target === els.donationModal) closeDonationModal();
+      });
+      els.donationForm.addEventListener('submit', handleDonation);
+      els.roleSelect.addEventListener('change', () => {
+        els.registerForm.displayName.placeholder = els.roleSelect.value === 'streamer'
+          ? 'Required for streamers'
+          : 'Optional';
+      });
+    }
 
-    logoutBtn.addEventListener('click', () => {
-      clearSession();
-      setAuthMessage('Logged out.', 'success');
-      rerender();
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      seedData(true);
-      setAuthMessage('Demo data reset. Login with seeded accounts.', 'success');
-      rerender();
-    });
-
-    seedData(false);
-    rerender();
+    setAuthTab('login');
+    bindEvents();
+    updateSessionUi();
+    refreshStreamers();
+    refreshSession();
   </script>
 </body>
 </html>
