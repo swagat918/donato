@@ -505,7 +505,7 @@
       </nav>
       <div class="toolbar">
         <span class="status-chip"><span class="status-dot" id="sessionDot"></span><span id="sessionText">Not signed in</span></span>
-        <a class="button button-secondary" href="client/index.html">Open React app</a>
+        <a class="button button-secondary" href="#auth">Go to login</a>
         <button class="button button-primary" id="scrollAuthBtn" type="button">Sign in</button>
       </div>
     </div>
@@ -523,7 +523,7 @@
         <div class="actions">
           <button class="button button-primary" id="goAuthBtn" type="button">Open auth</button>
           <a class="button button-secondary" href="#creators">Browse creators</a>
-          <a class="button button-secondary" href="client/index.html">Full React app</a>
+          <a class="button button-secondary" href="#dashboard">View dashboard</a>
         </div>
         <div class="pill-row">
           <span class="pill">Google sign-in</span>
@@ -705,16 +705,21 @@
     </section>
 
     <section class="section">
-      <div class="grid-2">
+      <div class="grid-3">
         <article class="card">
-          <span class="feature-badge">Why this is real</span>
-          <h3 style="margin-top:12px;">It uses the backend you already have.</h3>
-          <p>Auth, Google OAuth, user sessions, creator browsing, donations, and dashboards are wired to the Express API.</p>
+          <span class="feature-badge">Live auth</span>
+          <h3 style="margin-top:12px;">Sign in with phone, email, or Google.</h3>
+          <p>Session cookies and backend auth keep the experience consistent across the site.</p>
         </article>
         <article class="card">
-          <span class="feature-badge">What to check</span>
-          <h3 style="margin-top:12px;">Set Google env vars and run the server.</h3>
-          <p>If Google login is still failing, the server needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL configured.</p>
+          <span class="feature-badge">Creator pages</span>
+          <h3 style="margin-top:12px;">Browse creators and support them directly.</h3>
+          <p>Each streamer profile is wired to donation and earnings data from the API.</p>
+        </article>
+        <article class="card">
+          <span class="feature-badge">Dashboard</span>
+          <h3 style="margin-top:12px;">See totals, history, and live updates.</h3>
+          <p>The dashboard updates from the backend so supporters and streamers see the same truth.</p>
         </article>
       </div>
     </section>
@@ -724,16 +729,16 @@
         <div>
           <div class="eyebrow" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); border-color: rgba(255,255,255,0.12);">Get started</div>
           <h2 class="section-title" style="color:#fff; margin-top:12px;">Use the real DONATO website from the repo.</h2>
-          <p>Open this file, sign in, or launch the React app from client/index.html for the full production-style experience.</p>
+          <p>Open the auth flow, create an account, and start using the creator platform directly from this repository.</p>
         </div>
         <div class="actions" style="margin-top:0;">
-          <a class="button button-secondary" href="client/index.html">Open React app</a>
+          <a class="button button-secondary" href="#creators">Browse creators</a>
           <button class="button button-primary" id="ctaAuthBtn" type="button">Sign in now</button>
         </div>
       </div>
     </section>
 
-    <p class="footer">Standalone root website for local use. The same backend powers the full React client in the repo.</p>
+    <p class="footer">DONATO creator platform. Real auth, real creators, real donation flow.</p>
   </main>
 
   <div class="modal" id="donationModal" aria-hidden="true">
