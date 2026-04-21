@@ -39,6 +39,11 @@ app.use(
         return;
       }
 
+      if (env.isProduction && origin.endsWith('.vercel.app')) {
+        callback(null, true);
+        return;
+      }
+
       const corsError = new Error('Origin not allowed by CORS');
       corsError.statusCode = 403;
       callback(corsError);

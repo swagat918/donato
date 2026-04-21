@@ -21,6 +21,10 @@ export async function logout() {
 }
 
 export function startGoogleAuth() {
-  const googleUrl = import.meta.env.VITE_GOOGLE_AUTH_URL || 'http://localhost:5000/auth/google';
+  const googleUrl =
+    import.meta.env.VITE_GOOGLE_AUTH_URL ||
+    (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      ? 'http://localhost:5000/auth/google'
+      : '/api/auth/google');
   window.location.href = googleUrl;
 }

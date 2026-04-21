@@ -7,7 +7,7 @@ function StreamerDashboardPage() {
   const { streamer } = useAuth();
   const [summary, setSummary] = useState({ totalDonated: 0, totalReceived: 0 });
   const [donations, setDonations] = useState([]);
-  const [status, setStatus] = useState('connecting');
+  const [status, setStatus] = useState('polling');
   const [error, setError] = useState('');
 
   const streamerId = streamer?.id;
@@ -44,7 +44,35 @@ function StreamerDashboardPage() {
   useEffect(() => {
     if (!streamerId) return;
 
+    const poll = async () => {
+      try {
+        const [summaryData, streamerDonations] = await Promise.all([
+          getSummary(),
+          getStreamerDonations(streamerId)
+        ]);
+        setSummary(summaryData);
+        setDonations(streamerDonations);
+        setError('');
+      } catch (requestError) {
+        setError(requestError?.response?.data?.message || 'Failed to sync streamer dashboard');
+      }
+    };
+
+    const intervalId = setInterval(poll, 7000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [streamerId]);
+
+  useEffect(() => {
+    if (!streamerId) return;
+
     const socket = connectSocket();
+    if (!socket) {
+      setStatus('polling');
+      return;
+    }
 
     socket.on('connect', () => setStatus('connected'));
     socket.on('disconnect', () => setStatus('disconnected'));
@@ -78,6 +106,7 @@ function StreamerDashboardPage() {
   const statusClass = useMemo(() => {
     if (status === 'connected') return 'bg-mint/20 text-mint';
     if (status === 'disconnected') return 'bg-ember/20 text-ember';
+    if (status === 'polling') return 'bg-glow/20 text-ink';
     return 'bg-glow/20 text-ink';
   }, [status]);
 

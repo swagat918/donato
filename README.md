@@ -36,6 +36,55 @@ For production-like local run (backend serving built frontend):
 
 npm run start:prod
 
+## Deploy to Vercel (Real Website)
+
+This repository is configured to deploy as a single Vercel project:
+
+- Frontend: built from client (Vite output)
+- Backend API: serverless handler at api/[...all].js
+
+### 1) Import repository
+
+1. Open Vercel dashboard.
+2. Import repository swagat918/donato.
+3. Keep project root as repository root.
+
+### 2) Configure environment variables in Vercel
+
+Set these variables in Vercel Project Settings -> Environment Variables:
+
+- NODE_ENV=production
+- PORT=5000
+- MONGODB_URI=your-mongodb-atlas-uri
+- CLIENT_URL=https://your-project.vercel.app
+- COOKIE_NAME=donato_token
+- COOKIE_SAME_SITE=none
+- COOKIE_SECURE=true
+- JWT_SECRET=your-strong-secret
+- JWT_EXPIRES_IN=7d
+- PLATFORM_COMMISSION_RATE=5
+- DEFAULT_PAYMENT_PROVIDER=mock
+
+Optional Google OAuth variables:
+
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+- GOOGLE_CALLBACK_URL=https://your-project.vercel.app/api/auth/google/callback
+
+### 3) Deploy
+
+Deploy normally from Vercel. The repository includes vercel.json so routes and API mapping are preconfigured.
+
+### 4) Post-deploy checks
+
+1. Open https://your-project.vercel.app
+2. Verify API health: https://your-project.vercel.app/api/health
+3. Register/login and test donation flow
+
+### Real-time note on Vercel
+
+Socket.io long-lived realtime is limited on serverless platforms. The streamer dashboard in this repo automatically falls back to periodic polling in deployed mode, so donation feed still updates without manual refresh.
+
 ## Optional Static Preview
 
 Use this if you want a github.io style experience with no Node, no MongoDB, and no install steps.
