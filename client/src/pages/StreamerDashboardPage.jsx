@@ -120,28 +120,52 @@ function StreamerDashboardPage() {
 
   return (
     <section className="space-y-4">
-      <div className="card p-5">
-        <div className="flex items-center justify-between">
-          <h1 className="font-display text-2xl font-bold">Streamer Dashboard</h1>
-          <span className={`pill ${statusClass}`}>Socket: {status}</span>
+      <div className="card p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <span className="pill bg-mint/20 text-mint">Creator dashboard</span>
+            <h1 className="mt-3 font-display text-3xl font-bold">Streamer dashboard</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/70">
+              View live donations, donor messages, and the revenue you’ve earned from supporters in one place.
+            </p>
+          </div>
+          <span className={`pill ${statusClass}`}>Sync: {status}</span>
         </div>
-        <p className="mt-3 text-sm text-ink/70">Total Earnings</p>
-        <p className="font-display text-4xl font-bold">NPR {summary.totalReceived.toFixed(2)}</p>
+
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          <div className="rounded-2xl bg-paper p-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-ink/45">Total earnings</p>
+            <p className="mt-1 font-display text-3xl font-bold">NPR {summary.totalReceived.toFixed(2)}</p>
+          </div>
+          <div className="rounded-2xl bg-paper p-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-ink/45">Current feed items</p>
+            <p className="mt-1 font-display text-3xl font-bold">{donations.length}</p>
+          </div>
+          <div className="rounded-2xl bg-paper p-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-ink/45">Realtime mode</p>
+            <p className="mt-1 font-display text-3xl font-bold">{status}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="card p-5">
+      <div className="card p-6">
         <h2 className="font-display text-xl font-semibold">Live Donation Feed</h2>
-        <div className="mt-3 space-y-2">
+        <div className="mt-4 space-y-3">
           {donations.length ? (
             donations.map((item) => (
-              <div key={item.id} className="rounded-xl border border-ink/10 bg-white p-3">
-                <p className="text-sm font-semibold">{item.donorName} donated NPR {item.amount.toFixed(2)}</p>
-                <p className="text-sm text-ink/70">{item.message || 'No message'}</p>
-                <p className="text-xs text-ink/50">{new Date(item.createdAt).toLocaleString()}</p>
+              <div key={item.id} className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold">{item.donorName} donated</p>
+                    <p className="text-sm text-ink/70">{item.message || 'No message'}</p>
+                  </div>
+                  <span className="pill bg-glow/20 text-ink">NPR {item.amount.toFixed(2)}</span>
+                </div>
+                <p className="mt-2 text-xs text-ink/50">{new Date(item.createdAt).toLocaleString()}</p>
               </div>
             ))
           ) : (
-            <p className="text-sm text-ink/70">No donations received yet.</p>
+            <p className="text-sm text-ink/70">No donations received yet. Once donations arrive, they will appear here instantly.</p>
           )}
         </div>
       </div>

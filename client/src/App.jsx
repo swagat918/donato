@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import StreamerListPage from './pages/StreamerListPage';
@@ -16,7 +17,7 @@ function App() {
       <NavBar />
       <main className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8">
         <Routes>
-          <Route path="/" element={<Navigate to="/streamers" replace />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/streamers" element={<StreamerListPage />} />

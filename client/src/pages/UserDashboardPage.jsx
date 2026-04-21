@@ -45,6 +45,14 @@ function UserDashboardPage() {
 
   return (
     <section className="space-y-4">
+      <div className="card p-6">
+        <span className="pill bg-glow/20 text-ink">Your activity</span>
+        <h1 className="mt-3 font-display text-3xl font-bold">User dashboard</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/70">
+          See your donation history, track how much you’ve supported streamers, and review your recent activity.
+        </p>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
         <div className="card p-5">
           <p className="text-sm text-ink/70">Total Donated</p>
