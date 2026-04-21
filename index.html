@@ -493,30 +493,6 @@
   </main>
 </body>
 </html>
-      return prefix + '_' + Math.random().toString(36).slice(2, 10);
-    }
-
-    function money(value) {
-      return 'NPR ' + Number(value).toFixed(2);
-    }
-
-    function save(key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
-    }
-
-    function load(key, fallback) {
-      const value = localStorage.getItem(key);
-      if (!value) return fallback;
-      try {
-        return JSON.parse(value);
-      } catch (error) {
-        return fallback;
-      }
-    }
-
-    function seedData(forceReset) {
-      const hasSeed = load(KEYS.users, null) && load(KEYS.streamers, null);
-      if (hasSeed && !forceReset) return;
 
       const donor = {
         id: uid('u'),
