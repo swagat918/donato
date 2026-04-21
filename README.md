@@ -38,52 +38,70 @@ npm run start:prod
 
 ## Deploy to Vercel (Real Website)
 
-This repository is configured to deploy as a single Vercel project:
+This is the recommended production setup for DONATO.
 
-- Frontend: built from client (Vite output)
-- Backend API: serverless handler at api/[...all].js
+- Frontend: built from `client` with Vite
+- Backend API: serverless handler at `api/[...all].js`
+- Domain: your custom domain, such as `swagat.tech`
 
-### 1) Import repository
+### 1) Import the repo
 
-1. Open Vercel dashboard.
-2. Import repository swagat918/donato.
-3. Keep project root as repository root.
+1. Open Vercel.
+2. Import repository `swagat918/donato`.
+3. Keep the project root set to the repository root.
 
-### 2) Configure environment variables in Vercel
+### 2) Set build settings
 
-Set these variables in Vercel Project Settings -> Environment Variables:
+Use these Vercel settings:
 
-- NODE_ENV=production
-- PORT=5000
-- MONGODB_URI=your-mongodb-atlas-uri
-- CLIENT_URL=https://your-project.vercel.app
-- COOKIE_NAME=donato_token
-- COOKIE_SAME_SITE=none
-- COOKIE_SECURE=true
-- JWT_SECRET=your-strong-secret
-- JWT_EXPIRES_IN=7d
-- PLATFORM_COMMISSION_RATE=5
-- DEFAULT_PAYMENT_PROVIDER=mock
+- Build Command: `npm run build --workspace client`
+- Output Directory: `client/dist`
+- Install Command: default is fine
+
+### 3) Configure environment variables
+
+Set these in Vercel Project Settings -> Environment Variables:
+
+- `NODE_ENV=production`
+- `PORT=5000`
+- `MONGODB_URI=your-mongodb-atlas-uri`
+- `CLIENT_URL=https://swagat.tech`
+- `COOKIE_NAME=donato_token`
+- `COOKIE_SAME_SITE=none`
+- `COOKIE_SECURE=true`
+- `JWT_SECRET=your-strong-secret`
+- `JWT_EXPIRES_IN=7d`
+- `PLATFORM_COMMISSION_RATE=5`
+- `DEFAULT_PAYMENT_PROVIDER=mock`
 
 Optional Google OAuth variables:
 
-- GOOGLE_CLIENT_ID
-- GOOGLE_CLIENT_SECRET
-- GOOGLE_CALLBACK_URL=https://your-project.vercel.app/api/auth/google/callback
+- `GOOGLE_CLIENT_ID=your-google-client-id`
+- `GOOGLE_CLIENT_SECRET=your-google-client-secret`
+- `GOOGLE_CALLBACK_URL=https://swagat.tech/api/auth/google/callback`
 
-### 3) Deploy
+### 4) Connect the domain
 
-Deploy normally from Vercel. The repository includes vercel.json so routes and API mapping are preconfigured.
+If `swagat.tech` is managed outside Vercel, point DNS to the Vercel project and then add the domain inside Vercel.
 
-### 4) Post-deploy checks
+Typical DNS setup:
 
-1. Open https://your-project.vercel.app
-2. Verify API health: https://your-project.vercel.app/api/health
-3. Register/login and test donation flow
+- Apex/root `swagat.tech` -> A record `76.76.21.21`
+- `www.swagat.tech` -> CNAME `cname.vercel-dns.com`
 
-### Real-time note on Vercel
+### 5) Deploy
 
-Socket.io long-lived realtime is limited on serverless platforms. The streamer dashboard in this repo automatically falls back to periodic polling in deployed mode, so donation feed still updates without manual refresh.
+Deploy the project from Vercel. The repository already includes `vercel.json`, so the API routes and client build are wired up.
+
+### 6) Post-deploy checks
+
+1. Open `https://swagat.tech`
+2. Check API health: `https://swagat.tech/api/health`
+3. Register, log in, and test the donation flow
+
+### Vercel note
+
+Socket.io realtime is limited on serverless hosting, so the streamer dashboard uses polling fallback when deployed on Vercel.
 
 ## Optional Static Preview
 
