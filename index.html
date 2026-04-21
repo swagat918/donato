@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DONATO</title>
+  <script>
+    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/')) {
+      window.location.replace('client/index.html');
+    }
+  </script>
   <style>
     :root {
       --bg: #f5f2eb;
@@ -346,6 +351,22 @@
   </header>
 
   <main id="top" class="wrap">
+    <section class="section" style="padding-top: 18px;">
+      <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; background:rgba(255,255,255,0.9);">
+        <div>
+          <div class="eyebrow">Real app entry</div>
+          <h2 class="section-title" style="font-size: 1.8rem; margin-top: 10px;">Open the full DONATO app for Google login and account creation.</h2>
+          <p style="margin-top:8px; color:var(--muted); line-height:1.6; max-width:68ch;">
+            This root page is a landing page. The working authentication experience lives in the React app.
+          </p>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="button button-primary" href="client/index.html">Open app</a>
+          <a class="button button-secondary" href="client/index.html#/login">Go to login</a>
+        </div>
+      </div>
+    </section>
+
     <section class="hero">
       <div>
         <div class="eyebrow">Creator monetization platform</div>
