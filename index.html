@@ -493,31 +493,6 @@
   </main>
 </body>
 </html>
-    const KEYS = {
-      users: 'donato_demo_users',
-      streamers: 'donato_demo_streamers',
-      donations: 'donato_demo_donations',
-      session: 'donato_demo_session'
-    };
-
-    const authCard = document.getElementById('authCard');
-    const authMessage = document.getElementById('authMessage');
-    const streamerGrid = document.getElementById('streamerGrid');
-    const userDashboardCard = document.getElementById('userDashboardCard');
-    const streamerDashboardCard = document.getElementById('streamerDashboardCard');
-    const userDonationHistory = document.getElementById('userDonationHistory');
-    const streamerFeed = document.getElementById('streamerFeed');
-    const userTotalDonated = document.getElementById('userTotalDonated');
-    const streamerTotalEarnings = document.getElementById('streamerTotalEarnings');
-    const donationModal = document.getElementById('donationModal');
-    const donationModalTitle = document.getElementById('donationModalTitle');
-    const donationForm = document.getElementById('donationForm');
-    const donationMessage = document.getElementById('donationMessage');
-    const userDashBtn = document.getElementById('userDashBtn');
-    const streamerDashBtn = document.getElementById('streamerDashBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    function uid(prefix) {
       return prefix + '_' + Math.random().toString(36).slice(2, 10);
     }
 
